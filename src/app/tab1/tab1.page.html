@@ -30,7 +30,7 @@
         </ion-label>
 
         <ion-toggle [(ngModel)]="presente" [checked]="inscrito.presente"
-        (ionChange)="exibirAlertaPresenca($event)"></ion-toggle>
+        (ngModelChange)="exibirAlertaPresenca()"></ion-toggle>
 
       </ion-item>
 

@@ -37,15 +37,14 @@ export class Tab1Page {
       }
     }
 
-    async exibirAlertaPresenca(event: boolean) {
-      this.presente = event;
-      if(this.presente){
+    async exibirAlertaPresenca() {
+      if(!this.presente){
         this.mensagem = 'Deseja colocar participante como ausente?';
       }else{
         this.mensagem = 'Deseja colocar participante como presente?';
       }
       const alert = await this.alertController.create({
-        header: 'Alerta',
+        header: null,
         message: this.mensagem,
         buttons: [
           {
@@ -54,6 +53,8 @@ export class Tab1Page {
             id: 'cancel-button',
             handler: (blah) => {
               console.log('Confirm Cancel: blah');
+              if(this.presente){}
+              this.presente = !this.presente;
             }
           }, {
             text: 'SIM, Alterar Presença',
