@@ -10,14 +10,15 @@ import { IInscritos } from '../models/IInscritos.model';
 })
 export class InscritosService {
 
-  private apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/participantes/10/';
+  edicao = 10;
+  private apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/participantes/';
 
   constructor(private http: HttpClient, public toastController: ToastController) { }
 
   buscarInscrito(busca: string): Observable<IInscritos>{
-    const url = `${this.apiURL}buscar/${busca}`;
+    const url = `${this.apiURL}${10}/buscar/${busca}`;
 
-    return this.http.get<IInscritos>(url).pipe(
+    return this.http.get<IInscritos>(`https://cors-cuscuzhq.herokuapp.com/${url}`).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
     );
