@@ -10,4 +10,33 @@
 
   <ion-searchbar (ionChange)="buscarInscrito($event)" placeholder="Buscar"></ion-searchbar>
 
+  <ion-list *ngIf="listaInscritos ">
+
+    <ion-item lines="none" *ngIf="listaInscritos.length === 0">
+      <ion-label class="ion-text-center">
+        Não achou o inscrito...
+      </ion-label>
+    </ion-item>
+
+    <ion-item-sliding *ngFor="let inscrito of listaInscritos">
+
+      <ion-item lines="full">
+
+        <ion-label class="ion-text-wrap">
+          <div>
+            <h1>{{inscrito.nome}}</h1>
+            <p>{{inscrito.email}}</p>
+          </div>
+        </ion-label>
+
+        <ion-toggle [(ngModel)]="presente" [checked]="inscrito.presente"
+        (ionChange)="exibirAlertaPresenca($event)"></ion-toggle>
+
+      </ion-item>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+
 </ion-content>
