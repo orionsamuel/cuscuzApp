@@ -14,7 +14,7 @@ export class InscritosService {
   private apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/participantes/';
   private proxy = 'https://cors-cuscuzhq.herokuapp.com/';
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  private options: any = { headers: new HttpHeaders({'Content-Type': 'application/json' })};
+  private options: any = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
 
   constructor(private http: HttpClient, public toastController: ToastController) { }
@@ -30,14 +30,14 @@ export class InscritosService {
 
   cadastrarInscrito(inscrito: any){
     const url = `${this.apiURL}${this.edicao}`;
-    return this.http.post(`${this.proxy}${url}/`, JSON.stringify(inscrito, this.options)).pipe(
+    return this.http.post(`${this.proxy}${url}/`, JSON.stringify(inscrito), this.options).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
     );
   }
 
-  atualizarPresenca(inscrito: any, id: number){
-    const url = `${this.apiURL}${this.edicao}/${id}`;
+  atualizarPresenca(inscrito: any){
+    const url = `${this.apiURL}${this.edicao}/${inscrito.id}`;
     return this.http.put(`${this.proxy}${url}/`, JSON.stringify(inscrito), this.options).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))

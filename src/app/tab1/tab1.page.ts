@@ -40,7 +40,7 @@ export class Tab1Page {
     alterarPresenca(inscrito: any){
       inscrito.presente = inscrito.presente;
       console.log(inscrito);
-      this.inscritosService.atualizarPresenca(inscrito, inscrito.id).subscribe(dados=>{
+      this.inscritosService.atualizarPresenca(inscrito).subscribe(dados=>{
         console.log(dados);
         this.listaInscritos = dados;
       });
