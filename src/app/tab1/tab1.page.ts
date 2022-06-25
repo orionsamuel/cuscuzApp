@@ -37,7 +37,16 @@ export class Tab1Page {
       }
     }
 
-    async exibirAlertaPresenca() {
+    alterarPresenca(inscrito: any){
+      inscrito.presente = inscrito.presente;
+      console.log(inscrito);
+      this.inscritosService.atualizarPresenca(inscrito, inscrito.id).subscribe(dados=>{
+        console.log(dados);
+        this.listaInscritos = dados;
+      });
+    }
+
+    async exibirAlertaPresenca(inscrito: any) {
       if(!this.presente){
         this.mensagem = 'Deseja colocar participante como ausente?';
       }else{
@@ -60,7 +69,7 @@ export class Tab1Page {
             text: 'SIM, Alterar Presença',
             id: 'confirm-button',
             handler: () => {
-              this.apresentarToast();
+              this.apresentarToast(inscrito);
             }
           }
         ]
@@ -69,12 +78,13 @@ export class Tab1Page {
       await alert.present();
     }
 
-    async apresentarToast() {
+    async apresentarToast(inscrito: any) {
       const toast = await this.toastController.create({
         message: 'Alterada a presença do participante.',
         duration: 2000,
         color: 'success '
       });
       toast.present();
+      this.alterarPresenca(inscrito);
     }
 }

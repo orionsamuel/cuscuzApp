@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { HttpClient} from '@angular/common/http';
 import { InscritosService } from './../services/inscritos.service';
 import { IInscritos } from './../models/IInscritos.model';
 
@@ -15,8 +16,12 @@ export class Tab2Page implements OnInit {
 
   formCadastro: FormGroup;
   isSubmitted = false;
+  inscritos = [];
+  inscrito: any = {};
 
-  constructor(public toastController: ToastController, private formBuilder: FormBuilder) {}
+  constructor(public toastController: ToastController,
+              private formBuilder: FormBuilder,
+              public inscritosService: InscritosService) {}
 
   get errorControl() {
     return this.formCadastro.controls;
@@ -38,6 +43,16 @@ export class Tab2Page implements OnInit {
     }else{
       console.log(this.formCadastro.value);
       this.presentToast('Cadastrado Com Sucesso', 'success');
+      this.inscrito.nome = this.formCadastro.value.nome;
+      this.inscrito.telefone = this.formCadastro.value.telefone;
+      this.inscrito.email = this.formCadastro.value.email;
+      this.inscrito.edicao = 1;
+      this.inscrito.presente = true;
+      this.inscrito.sorteado = false;
+      console.log(this.inscrito);
+      this.inscritosService.cadastrarInscrito(this.inscrito).subscribe(dados=>{
+        console.log(dados);
+      });
       this.formCadastro.reset();
     }
   }

@@ -1,5 +1,5 @@
 import { ToastController } from '@ionic/angular';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -10,15 +10,35 @@ import { IInscritos } from '../models/IInscritos.model';
 })
 export class InscritosService {
 
-  edicao = 10;
+  private edicao = 10;
   private apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/participantes/';
+  private proxy = 'https://cors-cuscuzhq.herokuapp.com/';
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  private options: any = { headers: new HttpHeaders({'Content-Type': 'application/json' })};
+
 
   constructor(private http: HttpClient, public toastController: ToastController) { }
 
   buscarInscrito(busca: string): Observable<IInscritos>{
-    const url = `${this.apiURL}${10}/buscar/${busca}`;
+    const url = `${this.apiURL}${this.edicao}/buscar/${busca}`;
 
-    return this.http.get<IInscritos>(`https://cors-cuscuzhq.herokuapp.com/${url}`).pipe(
+    return this.http.get<IInscritos>(`${this.proxy}${url}`).pipe(
+      map(retorno => retorno),
+      catchError(erro => this.exibirErro(erro))
+    );
+  }
+
+  cadastrarInscrito(inscrito: any){
+    const url = `${this.apiURL}${this.edicao}`;
+    return this.http.post(`${this.proxy}${url}/`, JSON.stringify(inscrito, this.options)).pipe(
+      map(retorno => retorno),
+      catchError(erro => this.exibirErro(erro))
+    );
+  }
+
+  atualizarPresenca(inscrito: any, id: number){
+    const url = `${this.apiURL}${this.edicao}/${id}`;
+    return this.http.put(`${this.proxy}${url}/`, JSON.stringify(inscrito), this.options).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
     );
