@@ -11,23 +11,33 @@
   <div class="center">
     <ion-card>
 
-      <ion-item>
-        <ion-label position="floating">Nome</ion-label>
-        <ion-input type="name" [(ngModel)]="nome"></ion-input>
-      </ion-item>
+      <form [formGroup]="formCadastro" (ngSubmit)="cadastro()" novalidate>
 
-      <ion-item>
-        <ion-label position="floating">Telefone</ion-label>
-        <ion-input type="tel" [(ngModel)]="telefone"></ion-input>
-      </ion-item>
+        <ion-item lines="full">
+          <ion-label position="floating"><ion-icon name="person" item-start></ion-icon>
+            Nome</ion-label>
+          <ion-input clear-input="true" required type="text"
+          formControlName="nome"></ion-input>
+        </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">E-mail</ion-label>
-        <ion-input type="email" [(ngModel)]="email"></ion-input>
-      </ion-item>
+        <ion-item>
+          <ion-label position="floating"><ion-icon name="call" item-start></ion-icon>
+            Telefone</ion-label>
+          <ion-input clear-input="true" required type="tel"
+          formControlName="telefone"></ion-input>
+        </ion-item>
 
+        <ion-item>
+          <ion-label position="floating"><ion-icon name="mail" item-start></ion-icon>
+            E-mail</ion-label>
+          <ion-input clear-input="true" required type="email"
+          formControlName="email"></ion-input>
+        </ion-item>
 
-      <ion-button (click)="cadastro()" expand="full" fill="outline" color="primary">Cadastrar</ion-button>
+        <ion-button expand="full" fill="outline"
+        color="primary" type="submit">Cadastrar</ion-button>
+
+      </form>
 
     </ion-card>
   </div>
