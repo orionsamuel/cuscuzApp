@@ -14,9 +14,10 @@ export class Tab1Page {
 
   titulo = 'Inscritos Cuscuz HQ';
 
-  listaInscritos: IInscritos;
+  listaInscritos: any[];
   presente: boolean;
   mensagem: string;
+  tamanho: number;
 
   constructor(
     public alertController: AlertController,
@@ -33,6 +34,7 @@ export class Tab1Page {
         this.inscritosService.buscarInscrito(busca).subscribe(dados=>{
           console.log(dados);
           this.listaInscritos = dados;
+          this.tamanho = dados.length;
         });
       }
     }
@@ -43,6 +45,7 @@ export class Tab1Page {
       this.inscritosService.atualizarPresenca(inscrito).subscribe(dados=>{
         console.log(dados);
         this.listaInscritos = dados;
+        console.log(this.listaInscritos);
       });
     }
 

@@ -19,10 +19,10 @@ export class InscritosService {
 
   constructor(private http: HttpClient, public toastController: ToastController) { }
 
-  buscarInscrito(busca: string): Observable<IInscritos>{
+  buscarInscrito(busca: string): Observable<any>{
     const url = `${this.apiURL}${this.edicao}/buscar/${busca}`;
 
-    return this.http.get<IInscritos>(`${this.proxy}${url}`).pipe(
+    return this.http.get<any>(`${this.proxy}${url}`).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
     );
