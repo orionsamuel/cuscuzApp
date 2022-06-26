@@ -11,8 +11,8 @@ import { IInscritos } from '../models/IInscritos.model';
 export class InscritosService {
 
   private edicao = 10;
-  private apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/participantes/';
-  private proxy = 'https://cors-cuscuzhq.herokuapp.com/';
+  private apiURL = 'http://cuscuzhq.herokuapp.com/inscricao/v1/participantes/';
+  private proxy = 'http://cors-cuscuzhq.herokuapp.com/';
   // eslint-disable-next-line @typescript-eslint/naming-convention
   private options: any = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
