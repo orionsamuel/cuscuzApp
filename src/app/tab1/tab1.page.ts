@@ -1,5 +1,6 @@
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 import { InscritosService } from './../services/inscritos.service';
 import { IInscritos } from './../models/IInscritos.model';
 import { Component } from '@angular/core';
@@ -14,7 +15,7 @@ export class Tab1Page {
 
   titulo = 'Inscritos Cuscuz HQ';
 
-  listaInscritos: any[];
+  listaInscritos;
   presente: boolean;
   mensagem: string;
   tamanho: number;
@@ -48,6 +49,22 @@ export class Tab1Page {
         console.log(this.listaInscritos);
       });
     }
+
+
+    // buscarInscrito(evento: any){
+    //   console.log(evento.target.value);
+
+    //   const busca = evento.target.value;
+
+    //   if(busca && busca.trim() !== ''){
+    //     this.inscritosService.buscarInscrito(busca).subscribe(dados=>{
+    //       console.log(dados);
+    //       const parsed = JSON.parse(dados.data).results;
+    //       this.listaInscritos = parsed;
+    //       this.tamanho = this.listaInscritos.length;
+    //     });
+    //   }
+    // }
 
     async exibirAlertaPresenca(inscrito: any) {
       if(!this.presente){
