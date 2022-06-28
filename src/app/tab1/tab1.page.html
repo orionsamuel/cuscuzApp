@@ -1,16 +1,16 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
+  <ion-toolbar color="cuscuz-preto">
+    <ion-title class="ion-text-center">
       {{titulo}}
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" color="cuscuz">
 
   <ion-searchbar (ionChange)="buscarInscrito($event)" placeholder="Buscar"></ion-searchbar>
 
-  <ion-list *ngIf="listaInscritos ">
+  <ion-list *ngIf="listaInscritos" color="secondary">
 
     <ion-item lines="none" *ngIf="tamanho === 0">
       <ion-label class="ion-text-center">

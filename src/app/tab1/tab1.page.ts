@@ -48,7 +48,7 @@ export class Tab1Page {
     }
 
     async exibirAlertaPresenca(inscrito: any) {
-      if(!this.presente){
+      if(!inscrito.presente){
         this.mensagem = 'Deseja colocar participante como ausente?';
       }else{
         this.mensagem = 'Deseja colocar participante como presente?';

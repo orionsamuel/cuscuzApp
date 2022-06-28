@@ -4,6 +4,17 @@
   align-items: top;
 }
 
-ion-title{
+form{
+  width: 100%;
   align-items: center;
+}
+
+ion-button{
+  background-color: #e30e12;
+}
+
+ion-card{
+  width: 100% !important;
+  display: flex;
+  background-color: #fff47d;
 }

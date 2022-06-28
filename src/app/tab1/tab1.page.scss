@@ -8,10 +8,6 @@ ion-item{
     color: #dcdcdc;
   }
 
-  ion-title{
-    align-items: center;
-  }
-
    h1{
      font-weight: bold;
      font-size: 1.0rem;
@@ -26,4 +22,8 @@ ion-item{
    p + p{
      color: #8a8a8a;
    }
+}
+
+ion-list{
+  background-color: #fff47d;
 }
