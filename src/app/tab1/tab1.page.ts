@@ -15,7 +15,7 @@ export class Tab1Page {
 
   titulo = 'Inscritos Cuscuz HQ';
 
-  listaInscritos;
+  listaInscritos: any[];
   presente: boolean;
   mensagem: string;
   tamanho: number;
@@ -28,9 +28,7 @@ export class Tab1Page {
 
     buscarInscrito(evento: any){
       console.log(evento.target.value);
-
       const busca = evento.target.value;
-
       if(busca && busca.trim() !== ''){
         this.inscritosService.buscarInscrito(busca).subscribe(dados=>{
           console.log(dados);
@@ -45,26 +43,9 @@ export class Tab1Page {
       console.log(inscrito);
       this.inscritosService.atualizarPresenca(inscrito).subscribe(dados=>{
         console.log(dados);
-        this.listaInscritos = dados;
         console.log(this.listaInscritos);
       });
     }
-
-
-    // buscarInscrito(evento: any){
-    //   console.log(evento.target.value);
-
-    //   const busca = evento.target.value;
-
-    //   if(busca && busca.trim() !== ''){
-    //     this.inscritosService.buscarInscrito(busca).subscribe(dados=>{
-    //       console.log(dados);
-    //       const parsed = JSON.parse(dados.data).results;
-    //       this.listaInscritos = parsed;
-    //       this.tamanho = this.listaInscritos.length;
-    //     });
-    //   }
-    // }
 
     async exibirAlertaPresenca(inscrito: any) {
       if(!this.presente){
