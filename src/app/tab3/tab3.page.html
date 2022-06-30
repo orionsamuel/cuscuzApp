@@ -8,5 +8,27 @@
 
 <ion-content [fullscreen]="true" color="cuscuz">
 
+  <ion-list *ngIf="listaParticipantes">
+
+    <ion-item-sliding *ngFor="let participante of listaParticipantes">
+
+      <ion-item lines="full">
+
+        <ion-thumbnail slot="start">
+          <img src="{{participante.imagem}}"/>
+        </ion-thumbnail>
+
+        <ion-label class="ion-text-wrap">
+          <div>
+            <h1>{{participante.nome}}</h1>
+            <h2>{{participante.personagem}}</h2>
+          </div>
+        </ion-label>
+
+      </ion-item>
+
+    </ion-item-sliding>
+
+  </ion-list>
 
 </ion-content>
