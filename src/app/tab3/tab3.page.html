@@ -14,8 +14,24 @@
 
       <ion-item lines="full">
 
-        <ion-thumbnail slot="start">
+        <ion-thumbnail slot="start" (click)="setModal(true, participante.personagem, participante.imagem)">
           <img src="{{participante.imagem}}"/>
+          <ion-modal [isOpen]="isModalOpen">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-title class="ion-text-center">Personagem</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="setModal(false)">Fechar</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <img src="{{imagem}}"/>
+                <h1 style="text-align: center;">{{personagem}}</h1>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
         </ion-thumbnail>
 
         <ion-label class="ion-text-wrap">
@@ -26,6 +42,7 @@
         </ion-label>
 
       </ion-item>
+
 
     </ion-item-sliding>
 

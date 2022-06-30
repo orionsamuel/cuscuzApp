@@ -11,6 +11,9 @@ import { CospobreService } from '../services/cospobre.service';
 export class Tab3Page {
 
   listaParticipantes: any[];
+  personagem: string;
+  imagem: string;
+  isModalOpen = false;
 
   constructor(
     public alertController: AlertController,
@@ -23,5 +26,11 @@ export class Tab3Page {
         console.log(dados);
         this.listaParticipantes = dados;
       });
+    }
+
+    setModal(isOpen: boolean, personagem: string, imagem: string){
+      this.isModalOpen = isOpen;
+      this.personagem = personagem;
+      this.imagem = imagem;
     }
 }
