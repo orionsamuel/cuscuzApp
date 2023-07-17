@@ -1,13 +1,22 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="cuscuz-preto">
     <ion-title class="ion-text-center">
-      Cospobres
+      <div class="title-container">
+        <div class="centered-content">
+          <h1 *ngIf="isCosplay">
+            Cospobres
+          </h1>
+          <h1 *ngIf="!isCosplay">
+            Cosplayers
+          </h1>
+          <ion-toggle [checked]="isCosplay" (ionChange)="cosplayToggleChanged($event)"></ion-toggle>
+        </div>
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="cuscuz">
- 
   <ion-list *ngIf="listaParticipantes">
 
     <ion-item-sliding *ngFor="let participante of listaParticipantes">

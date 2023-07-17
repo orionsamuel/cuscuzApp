@@ -39,3 +39,16 @@ ion-modal img {
   height: auto;
   max-height: 300px;
 }
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.centered-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

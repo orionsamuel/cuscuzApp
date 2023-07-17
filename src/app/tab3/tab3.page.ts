@@ -17,6 +17,7 @@ export class Tab3Page implements OnInit {
 
   formCadastroNotas: FormGroup;
   isSubmitted = false;
+  isCosplay = true;
   edicao: number;
   notas: any = {};
   listaParticipantes: any[];
@@ -44,6 +45,7 @@ export class Tab3Page implements OnInit {
       setTimeout(() => {
         this.buscarParticipante();
       }, 2000);
+      console.log(this.isCosplay);
     }
 
     get errorControl() {
@@ -71,6 +73,14 @@ export class Tab3Page implements OnInit {
           Validators.max(10)
         ]]
       });
+    }
+
+    cosplayToggleChanged(event: CustomEvent){
+      this.isCosplay = event.detail.checked;
+      console.log(this.isCosplay);
+      setTimeout(() => {
+        this.buscarParticipante();
+      }, 2000);
     }
 
     buscaNotasEAltera()
@@ -101,7 +111,7 @@ export class Tab3Page implements OnInit {
         this.notas.nota_3 = notaEncontrada.nota_3 + this.formCadastroNotas.value.desenvolvimento;
         this.notas.total_nota = (this.notas.nota_1 + this.notas.nota_2+ this.notas.nota_3) / 3;
         console.log(this.notas);
-        this.notasService.atualizarNotas(this.notas, this.edicao).subscribe(dados=>{
+        this.notasService.atualizarNotas(this.notas, this.edicao, this.isCosplay).subscribe(dados=>{
           console.log(dados);
         });
         this.formCadastroNotas.reset();
@@ -109,8 +119,9 @@ export class Tab3Page implements OnInit {
     }
 
     buscarParticipante(){
-      this.cospobreService.buscarParticipante(this.edicao).subscribe(dados=>{
+      this.cospobreService.buscarParticipante(this.edicao, this.isCosplay).subscribe(dados=>{
         console.log(dados);
+        console.log(this.isCosplay);
         this.listaParticipantes = dados;
       });
     }
@@ -123,7 +134,7 @@ export class Tab3Page implements OnInit {
     }
 
     buscarNotas(){
-      this.notasService.buscarNotas(this.edicao).subscribe(dados=>{
+      this.notasService.buscarNotas(this.edicao, this.isCosplay).subscribe(dados=>{
         console.log(dados);
         this.listaNotas = dados;
         console.log(this.listaNotas);
