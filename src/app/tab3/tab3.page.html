@@ -7,14 +7,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="cuscuz">
-
+ 
   <ion-list *ngIf="listaParticipantes">
 
     <ion-item-sliding *ngFor="let participante of listaParticipantes">
 
       <ion-item lines="full">
 
-        <ion-thumbnail slot="start" (click)="setModal(true, participante.personagem, participante.imagem)">
+        <ion-thumbnail slot="start" (click)="setModal(true, participante.personagem, participante.imagem, participante.nome)">
           <img src="{{participante.imagem}}"/>
           <ion-modal [isOpen]="isModalOpen">
             <ng-template>
@@ -29,6 +29,30 @@
               <ion-content class="ion-padding">
                 <img src="{{imagem}}"/>
                 <h1 style="text-align: center;">{{personagem}}</h1>
+                <form [formGroup]="formCadastroNotas" (ngSubmit)="buscaNotasEAltera()" novalidate>
+
+                  <ion-item lines="full">
+                    <ion-label position="floating">Criatividade</ion-label>
+                    <ion-input clear-input="true" required type="number"
+                    formControlName="criatividade"></ion-input>
+                  </ion-item>
+          
+                  <ion-item>
+                    <ion-label position="floating">Fidelidade</ion-label>
+                    <ion-input clear-input="true" required type="number"
+                    formControlName="fidelidade"></ion-input>
+                  </ion-item>
+          
+                  <ion-item>
+                    <ion-label position="floating">Desenvolvimento</ion-label>
+                    <ion-input clear-input="true" required type="number"
+                    formControlName="desenvolvimento"></ion-input>
+                  </ion-item>
+          
+                  <ion-button expand="full" fill="outline"
+                  color="red" type="submit">Cadastrar Notas</ion-button>
+          
+                </form>
               </ion-content>
             </ng-template>
           </ion-modal>
@@ -40,6 +64,21 @@
             <h2>{{participante.personagem}}</h2>
           </div>
         </ion-label>
+
+        <ion-button (click)="reproduzirAudio(participante.som)">
+          <ion-icon name="play"></ion-icon>
+        </ion-button>
+        <ion-button (click)="pausarAudio()">
+          <ion-icon name="pause"></ion-icon>
+        </ion-button>
+        <ion-button (click)="pararAudio()">
+          <ion-icon name="stop"></ion-icon>
+        </ion-button>
+
+        
+        <!-- <audio controls>
+          <source [src]="sanitizer.bypassSecurityTrustUrl(participante.som)" type="audio/mpeg">"
+        </audio> -->
 
       </ion-item>
 

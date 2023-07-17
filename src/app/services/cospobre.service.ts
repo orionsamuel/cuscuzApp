@@ -10,15 +10,18 @@ import { ICospobre } from '../models/ICospobre.model';
 })
 export class CospobreService {
 
-  private edicao = 10;
   private apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/cospobre/';
+  private apiURLEdicao = 'https://cuscuzhq.herokuapp.com/inscricao/v1/edicaoatual/';
   // eslint-disable-next-line @typescript-eslint/naming-convention
   private options: any = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
-  constructor(private http: HttpClient, public toastController: ToastController) { }
+  constructor(
+    private http: HttpClient,
+    public toastController: ToastController){}
 
-  buscarParticipante(): Observable<any>{
-    const url = `${this.apiURL}${this.edicao}/`;
+  buscarParticipante(edicao: number): Observable<any>{
+    console.log(edicao);
+    const url = `${this.apiURL}${edicao}/`;
     return this.http.get<any>(`${url}`).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))

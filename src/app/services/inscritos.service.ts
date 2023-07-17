@@ -10,13 +10,22 @@ import { IInscritos } from '../models/IInscritos.model';
 })
 export class InscritosService {
 
-  private edicao = 10;
+  public edicao;
   private apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/participantes/';
+  private apiURLEdicao = 'https://cuscuzhq.herokuapp.com/inscricao/v1/edicaoatual/';
   // eslint-disable-next-line @typescript-eslint/naming-convention
   private options: any = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
 
-  constructor(private http: HttpClient, public toastController: ToastController) { }
+    constructor(
+    private http: HttpClient,
+    public toastController: ToastController)
+    {
+      this.buscarEdicao().subscribe(dados=>{
+        console.log(dados);
+        this.edicao = dados.numero;
+      });
+    }
 
   buscarInscrito(busca: string): Observable<any>{
     const url = `${this.apiURL}${this.edicao}/buscar/${busca}`;
@@ -25,6 +34,8 @@ export class InscritosService {
       catchError(erro => this.exibirErro(erro))
     );
   }
+
+
   cadastrarInscrito(inscrito: any){
     const url = `${this.apiURL}${this.edicao}`;
     return this.http.post(`${url}/`, JSON.stringify(inscrito), this.options).pipe(
@@ -36,6 +47,14 @@ export class InscritosService {
   atualizarPresenca(inscrito: any){
     const url = `${this.apiURL}${this.edicao}/${inscrito.id}`;
     return this.http.put(`${url}/`, JSON.stringify(inscrito), this.options).pipe(
+      map(retorno => retorno),
+      catchError(erro => this.exibirErro(erro))
+    );
+  }
+
+  buscarEdicao(): Observable<any>{
+    const url = `${this.apiURLEdicao}`;
+    return this.http.get<any>(`${url}`).pipe(
       map(retorno => retorno),
       catchError(erro => this.exibirErro(erro))
     );

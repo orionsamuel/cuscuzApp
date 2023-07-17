@@ -23,3 +23,19 @@ ion-item{
 ion-list{
   background-color: #fff47d;
 }
+
+ion-button {
+  --background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+ion-button ion-icon {
+  font-size: 18px;
+}
+
+ion-modal img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+}

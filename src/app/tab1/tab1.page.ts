@@ -15,6 +15,7 @@ export class Tab1Page {
 
   titulo = 'Inscritos Cuscuz HQ';
 
+  edicao: number;
   listaInscritos: any[];
   presente: boolean;
   mensagem: string;
@@ -24,9 +25,16 @@ export class Tab1Page {
     public alertController: AlertController,
     public toastController: ToastController,
     public route: Router,
-    public inscritosService: InscritosService) {}
+    public inscritosService: InscritosService)
+    {
+      this.inscritosService.buscarEdicao().subscribe(dados=>{
+        console.log(dados);
+        this.edicao = dados.numero;
+      });
+    }
 
     buscarInscrito(evento: any){
+      console.log(this.edicao);
       console.log(evento.target.value);
       const busca = evento.target.value;
       if(busca && busca.trim() !== ''){
