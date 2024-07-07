@@ -11,7 +11,7 @@ import { ICospobre } from '../models/ICospobre.model';
 export class CospobreService {
 
   private apiURL;
-  private apiURLEdicao = 'https://cuscuzhq.herokuapp.com/inscricao/v1/edicaoatual/';
+  private apiURLEdicao = 'https://cuscuz-hq-eacbb89cec6b.herokuapp.com/inscricao/v1/edicaoatual/';
   // eslint-disable-next-line @typescript-eslint/naming-convention
   private options: any = { headers: new HttpHeaders({'Content-Type': 'application/json'})};
 
@@ -22,9 +22,9 @@ export class CospobreService {
   buscarParticipante(edicao: number, isCosplay: boolean): Observable<any>{
     console.log(edicao);
     if(isCosplay){
-      this.apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/cospobre/';
+      this.apiURL = 'https://cuscuz-hq-eacbb89cec6b.herokuapp.com/inscricao/v1/cospobre/';
     }else{
-      this.apiURL = 'https://cuscuzhq.herokuapp.com/inscricao/v1/cosplay/';
+      this.apiURL = 'https://cuscuz-hq-eacbb89cec6b.herokuapp.com/inscricao/v1/cosplay/';
     }
     const url = `${this.apiURL}${edicao}/`;
     return this.http.get<any>(`${url}`).pipe(

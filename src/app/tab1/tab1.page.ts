@@ -46,8 +46,8 @@ export class Tab1Page {
       }
     }
 
-    alterarPresenca(inscrito: any){
-      inscrito.presente = inscrito.presente;
+    alterarPresenca1(inscrito: any){
+      inscrito.presente1 = inscrito.presente1;
       console.log(inscrito);
       this.inscritosService.atualizarPresenca(inscrito).subscribe(dados=>{
         console.log(dados);
@@ -55,8 +55,17 @@ export class Tab1Page {
       });
     }
 
-    async exibirAlertaPresenca(inscrito: any) {
-      if(!inscrito.presente){
+    alterarPresenca2(inscrito: any){
+      inscrito.presente2 = inscrito.presente2;
+      console.log(inscrito);
+      this.inscritosService.atualizarPresenca(inscrito).subscribe(dados=>{
+        console.log(dados);
+        console.log(this.listaInscritos);
+      });
+    }
+
+    async exibirAlertaPresenca1(inscrito: any) {
+      if(!inscrito.presente1){
         this.mensagem = 'Deseja colocar participante como ausente?';
       }else{
         this.mensagem = 'Deseja colocar participante como presente?';
@@ -78,7 +87,7 @@ export class Tab1Page {
             text: 'SIM, Alterar Presença',
             id: 'confirm-button',
             handler: () => {
-              this.apresentarToast(inscrito);
+              this.apresentarToast1(inscrito);
             }
           }
         ]
@@ -87,13 +96,55 @@ export class Tab1Page {
       await alert.present();
     }
 
-    async apresentarToast(inscrito: any) {
+    async exibirAlertaPresenca2(inscrito: any) {
+      if(!inscrito.presente2){
+        this.mensagem = 'Deseja colocar participante como ausente?';
+      }else{
+        this.mensagem = 'Deseja colocar participante como presente?';
+      }
+      const alert = await this.alertController.create({
+        header: null,
+        message: this.mensagem,
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            id: 'cancel-button',
+            handler: (blah) => {
+              console.log('Confirm Cancel: blah');
+              if(this.presente){}
+              this.presente = !this.presente;
+            }
+          }, {
+            text: 'SIM, Alterar Presença',
+            id: 'confirm-button',
+            handler: () => {
+              this.apresentarToast2(inscrito);
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }
+
+    async apresentarToast1(inscrito: any) {
       const toast = await this.toastController.create({
         message: 'Alterada a presença do participante.',
         duration: 2000,
         color: 'success '
       });
       toast.present();
-      this.alterarPresenca(inscrito);
+      this.alterarPresenca1(inscrito);
+    }
+
+    async apresentarToast2(inscrito: any) {
+      const toast = await this.toastController.create({
+        message: 'Alterada a presença do participante.',
+        duration: 2000,
+        color: 'success '
+      });
+      toast.present();
+      this.alterarPresenca2(inscrito);
     }
 }

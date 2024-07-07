@@ -6,6 +6,7 @@ export interface IInscritos{
   telefone: string;
   email: string;
   edicao: number;
-  presente: boolean;
+  presente1: boolean;
+  presente2: boolean;
   sorteado: boolean;
 }

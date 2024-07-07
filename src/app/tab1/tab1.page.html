@@ -29,8 +29,11 @@
           </div>
         </ion-label>
 
-        <ion-toggle [(ngModel)]="inscrito.presente" [checked]="inscrito.presente"
-        (ngModelChange)="exibirAlertaPresenca(inscrito)"></ion-toggle>
+        <ion-checkbox [(ngModel)]="inscrito.presente1" [checked]="inscrito.presente1"
+        (ngModelChange)="exibirAlertaPresenca1(inscrito)"></ion-checkbox>
+
+        <ion-checkbox [(ngModel)]="inscrito.presente2" [checked]="inscrito.presente2"
+        (ngModelChange)="exibirAlertaPresenca2(inscrito)"></ion-checkbox>
 
       </ion-item>
 
