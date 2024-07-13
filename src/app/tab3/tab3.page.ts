@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { DomSanitizer } from '@angular/platform-browser';
-import { AlertController, ToastController } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 import { CospobreService } from '../services/cospobre.service';
 import { InscritosService } from './../services/inscritos.service';
 import { NotasService } from '../services/notas.service';
+import { ImageCacheService } from '../services/image-cache.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-tab3',
@@ -28,24 +30,29 @@ export class Tab3Page implements OnInit {
   isModalOpen = false;
   musica: HTMLAudioElement;
   posicaoReproducao = 0;
+  cachedImages: { [key: string]: string } = {};
 
   constructor(
-    public alertController: AlertController,
-    public toastController: ToastController,
-    public route: Router,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private sanitizer: DomSanitizer,
     public cospobreService: CospobreService,
     public inscritosService: InscritosService,
-    public notasService: NotasService)
+    public notasService: NotasService,
+    private imageCacheService: ImageCacheService,
+    private toastController: ToastController,
+    private router: Router,
+    private platform: Platform,
+    private cdr: ChangeDetectorRef)
     {
-      this.buscarEdicao();
-      console.log(this.edicao);
-      setTimeout(() => {
-        this.buscarParticipante();
-      }, 2000);
-      console.log(this.isCosplay);
+      this.platform.ready().then(() => {
+        this.init();
+      });
+      // this.buscarEdicao();
+        // console.log(this.edicao);
+        // setTimeout(() => {
+        //   this.buscarParticipante();
+        // }, 2000);
+        // console.log(this.isCosplay);
     }
 
     get errorControl() {
@@ -73,6 +80,49 @@ export class Tab3Page implements OnInit {
           Validators.max(10)
         ]]
       });
+    }
+
+    ionViewDidEnter() {
+      this.cdr.detectChanges();
+    }
+
+    async init() {
+      try {
+        // Primeiro, busca a edição do evento
+        await this.buscarEdicao();
+
+        // Em seguida, busca os participantes (usa a edição do evento)
+        await this.buscarParticipante();
+
+        // Agora cacheia as imagens dos participantes
+        await this.cacheImagesForParticipants();
+      } catch (error) {
+        console.error('Erro ao inicializar dados:', error);
+      }
+    }
+
+    async cacheImagesForParticipants() {
+      try {
+        for (const participante of this.listaParticipantes) {
+          const cachedImageUrl = await this.imageCacheService.cacheImage(participante.imagem, participante.email);
+          console.log('URL cache: ', cachedImageUrl);
+          //const hash = CryptoJS.MD5(participante.imagem).toString();
+          this.cachedImages[participante.email] = cachedImageUrl;
+        }
+      } catch (error) {
+        console.error('Erro ao cacheiar imagens:', error);
+      }
+    }
+
+    getImageUrl(participante: any): string {
+      //const hash = CryptoJS.MD5(participante.imagem).toString();
+      console.log('URL final da imagem: ', this.cachedImages[participante.email]);
+      const cacheUrl = this.cachedImages[participante.email];
+      if(!cacheUrl.includes('null'))
+      {
+        return cacheUrl;
+      }
+      return participante.imagem;
     }
 
     cosplayToggleChanged(event: CustomEvent){
@@ -118,19 +168,24 @@ export class Tab3Page implements OnInit {
       }
     }
 
-    buscarParticipante(){
-      this.cospobreService.buscarParticipante(this.edicao, this.isCosplay).subscribe(dados=>{
-        console.log(dados);
-        console.log(this.isCosplay);
-        this.listaParticipantes = dados;
-      });
+    async buscarParticipante(){
+      try {
+        const participantes = await this.cospobreService.buscarParticipante(this.edicao, this.isCosplay).toPromise();
+        console.log(participantes);
+        this.listaParticipantes = participantes;
+      } catch (error) {
+        console.error('Erro ao buscar participantes:', error);
+      }
     }
 
-    buscarEdicao(){
-      this.inscritosService.buscarEdicao().subscribe(dados=>{
+    async buscarEdicao(){
+      try {
+        const dados = await this.inscritosService.buscarEdicao().toPromise();
         console.log(dados);
         this.edicao = dados.numero;
-      });
+      } catch (error) {
+        console.error('Erro ao buscar edição:', error);
+      }
     }
 
     buscarNotas(){

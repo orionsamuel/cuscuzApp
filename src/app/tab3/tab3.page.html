@@ -40,27 +40,27 @@
                 <h1 style="text-align: center;">{{personagem}}</h1>
                 <form [formGroup]="formCadastroNotas" (ngSubmit)="buscaNotasEAltera()" novalidate>
 
-                  <ion-item lines="full">
+                  <ion-item lines="full" class="ion-no-padding">
                     <ion-label position="floating">Criatividade</ion-label>
                     <ion-input clear-input="true" required type="number"
                     formControlName="criatividade"></ion-input>
                   </ion-item>
-          
-                  <ion-item>
+
+                  <ion-item lines="full" class="ion-no-padding">
                     <ion-label position="floating">Fidelidade</ion-label>
                     <ion-input clear-input="true" required type="number"
                     formControlName="fidelidade"></ion-input>
                   </ion-item>
-          
-                  <ion-item>
+
+                  <ion-item lines="full" class="ion-no-padding">
                     <ion-label position="floating">Desenvolvimento</ion-label>
                     <ion-input clear-input="true" required type="number"
                     formControlName="desenvolvimento"></ion-input>
                   </ion-item>
-          
+
                   <ion-button expand="full" fill="outline"
                   color="red" type="submit">Cadastrar Notas</ion-button>
-          
+
                 </form>
               </ion-content>
             </ng-template>
@@ -84,7 +84,7 @@
           <ion-icon name="stop"></ion-icon>
         </ion-button>
 
-        
+
         <!-- <audio controls>
           <source [src]="sanitizer.bypassSecurityTrustUrl(participante.som)" type="audio/mpeg">"
         </audio> -->
